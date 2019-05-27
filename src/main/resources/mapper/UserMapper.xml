@@ -108,7 +108,8 @@
     values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zhaoyangyingmu.usercommon.entity.User">
+  <insert id="insertSelective" keyProperty="userId" keyColumn="user_id" useGeneratedKeys="true"
+          parameterType="com.zhaoyangyingmu.usercommon.entity.User">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
