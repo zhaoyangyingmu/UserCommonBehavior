@@ -5,7 +5,9 @@ public enum ErrorCode {
 
     // 用户部分
     INFO_NOT_COMPLETE(1001, "缺失参数"),
-    REGISTER_FAILED(1002, "注册失败");
+    REGISTER_FAILED(1002, "注册失败"),
+    DUPLICATE_USERNAME(1003, "重复的用户名"),
+    LOGIN_FAILED(1004, "登陆失败");
 
 
     private int errorCode;
