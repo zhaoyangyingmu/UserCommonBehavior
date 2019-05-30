@@ -32,7 +32,7 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST,
             consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
-    public String register(@RequestBody User user){
+    public String register(@RequestBody User user, HttpServletRequest request){
         if (StringUtil.isEmpty(user.getEmail()) || StringUtil.isEmpty(user.getPassword())
                 || StringUtil.isEmpty(user.getPhone()) || StringUtil.isEmpty(user.getUsername())) {
             return ApiResult.writeError(ErrorCode.INFO_NOT_COMPLETE);
@@ -45,6 +45,8 @@ public class UserController {
         catch (DuplicateKeyException e) {
             return ApiResult.writeError(ErrorCode.DUPLICATE_USERNAME);
         }
+        HttpSession session = request.getSession();
+        session.setAttribute("username", user.getUsername());
         Map<String, Object> data = new HashMap<>();
         data.put("user_id", user.getUserId());
         data.put("username", user.getUsername());
