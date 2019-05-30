@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import util.ApiResult;
-import util.StringUtil;
-import util.errorCode.ErrorCode;
+import com.zhaoyangyingmu.usercommon.util.ApiResult;
+import com.zhaoyangyingmu.usercommon.util.StringUtil;
+import com.zhaoyangyingmu.usercommon.util.errorCode.ErrorCode;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -50,7 +53,7 @@ public class UserController {
 
     @RequestMapping(value="/login", method = RequestMethod.POST,
             consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
-    public String login(@RequestBody User user) {
+    public String login(@RequestBody User user, HttpServletRequest request) {
         // 只需要username和password就好了
         if ( StringUtil.isEmpty(user.getPassword()) || StringUtil.isEmpty(user.getUsername())) {
             return ApiResult.writeError(ErrorCode.INFO_NOT_COMPLETE);
@@ -58,8 +61,26 @@ public class UserController {
 
         // 错误处理
         if (userService.authenticate(user) == 1) {
+            HttpSession session = request.getSession();
+            session.setAttribute("username", user.getUsername());
             return ApiResult.writeSuccess();
         }
         return ApiResult.writeError(ErrorCode.LOGIN_FAILED);
+    }
+
+    @RequestMapping(value="/get_all_users", method = RequestMethod.GET,
+            consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
+    public String getAllUsers(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("username");
+        if (username == null) {
+            return ApiResult.writeError(ErrorCode.HAVENT_LOGINED);
+        }
+
+        List<User> users = userService.getAllUsers();
+        for (User user: users) {
+            user.setPassword(null);
+        }
+        return ApiResult.writeData(users);
     }
 }

@@ -1,8 +1,8 @@
-package util;
+package com.zhaoyangyingmu.usercommon.util;
 
 import com.alibaba.fastjson.JSONObject;
-import util.errorCode.ErrorCode;
-import util.errorCode.ErrorCodeException;
+import com.zhaoyangyingmu.usercommon.util.errorCode.ErrorCode;
+import com.zhaoyangyingmu.usercommon.util.errorCode.ErrorCodeException;
 
 public class ApiResult {
 	public static String writeSuccess() {

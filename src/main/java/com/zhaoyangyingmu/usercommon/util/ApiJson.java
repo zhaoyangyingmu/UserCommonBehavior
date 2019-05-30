@@ -1,4 +1,4 @@
-package util;
+package com.zhaoyangyingmu.usercommon.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;

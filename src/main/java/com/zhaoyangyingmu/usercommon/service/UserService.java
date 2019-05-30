@@ -2,6 +2,8 @@ package com.zhaoyangyingmu.usercommon.service;
 
 import com.zhaoyangyingmu.usercommon.entity.User;
 
+import java.util.List;
+
 
 public interface UserService {
 
@@ -14,4 +16,6 @@ public interface UserService {
      * authenticate 进行身份认证，成功返回1， 错误返回0
      * */
     int authenticate(User user);
+
+    List<User> getAllUsers();
 }

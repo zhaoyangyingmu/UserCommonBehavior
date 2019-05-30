@@ -1,4 +1,4 @@
-package util.errorCode;
+package com.zhaoyangyingmu.usercommon.util.errorCode;
 
 public abstract class ErrorCodeException extends Exception {
     private int errCode;
